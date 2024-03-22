@@ -34,10 +34,17 @@ export default function SearchBar () {
     setSearchParams(value && {search: value})
     dispatch(searchActions.changeSearch(value))
   }
+  //TODO: redo setSearchParams accounting for back
   
   return (
-    <div className="pb-6 px-7">
-      <input type="text" className="outline-slate-400 py-2 px-4 text-lg border border-zinc-900 rounded-full w-full" onChange={handleChange} value={searchTerm} placeholder="Cerca per titolo, autore, codice ISBN..."/>
+    <div className="mb-16 px-0 xs:px-5 flex justify-center">
+      <input
+        type="text"
+        className="outline-slate-400 py-2 px-4 max-w-200 text-lg border border-zinc-900 rounded-full w-full"
+        onChange={handleChange}
+        value={searchTerm}
+        placeholder="Cerca per titolo, autore, codice ISBN..."
+      />
     </div>
   )
 }

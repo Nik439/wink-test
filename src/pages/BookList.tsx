@@ -11,7 +11,7 @@ export default function BookListPage () {
     useSearchBooksQuery(searchTerm, { skip: searchTerm==="" || isWriting })
 
   return (
-    <div className="flex flex-col px-5 pt-14 pb-20 min-h-screen">
+    <div className="flex flex-col px-5 pt-14 pb-20 min-h-screen mx-auto max-w-[1200px]">
       <SearchBar/>      
         { isLoading || isFetching || isWriting ?
           <div className="m-auto flex">
