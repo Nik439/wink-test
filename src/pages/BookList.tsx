@@ -1,8 +1,9 @@
 import SearchBar from "../components/SearchBar";
-import { useSearchBooksQuery } from "../app/booksApiSlice";
+import { Book, useSearchBooksQuery } from "../app/booksApiSlice";
 import { useAppSelector } from "../app/hooks";
 import logo from '../assets/logo.svg'
 import loadingDot from '../assets/loading-dot.svg'
+import BookItem from "../components/BookIem";
 
 export default function BookListPage () {
   const {searchTerm, isWriting} = useAppSelector(state => state.search)
@@ -25,10 +26,8 @@ export default function BookListPage () {
           </div>
         : isSuccess && data.totalItems > 0 ? 
           <ul>
-            {data.items.map(book=>(
-              <li key={book.id}>
-                <p>- {book.volumeInfo.title}</p>
-              </li>
+            {data.items.map((book: Book)=>(
+              <BookItem bookData={book} key={book.id}/>
             ))}
           </ul>
         : isSuccess && data.totalItems === 0 ? 
