@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import "./App.css"
-import HomePage from "./pages/Home"
+import BookListPage from "./pages/BookList"
 import BookDetailPage from "./pages/BookDetail"
 
 const router = createBrowserRouter([
@@ -9,7 +9,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <HomePage/>
+        element: <BookListPage/>
       },
       {
         path: ':bookId',

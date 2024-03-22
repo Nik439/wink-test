@@ -4,7 +4,7 @@ import { useAppSelector } from "../app/hooks";
 import logo from '../assets/logo.svg'
 import loadingDot from '../assets/loading-dot.svg'
 
-export default function HomePage () {
+export default function BookListPage () {
   const {searchTerm, isWriting} = useAppSelector(state => state.search)
   const { data, isError, isLoading, isSuccess } = 
     useSearchBooksQuery(searchTerm, { skip: searchTerm==="" || isWriting })
