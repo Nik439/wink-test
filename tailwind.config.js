@@ -7,9 +7,13 @@ export default {
   theme: {
     extend: {
       spacing: {
+        '26': '6.5rem',
         '100': '25rem',
         '150': '37.5rem',
         '200': '50rem',
+      },
+      screens: {
+        'xs': '480px'
       },
       animation: {
         'bounce-0': 'big-bounce .5s infinite ',
