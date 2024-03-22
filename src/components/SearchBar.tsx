@@ -36,8 +36,8 @@ export default function SearchBar () {
   }
   
   return (
-    <div>
-      <input type="text" onChange={handleChange} value={searchTerm} placeholder="Cerca per titolo, autore, codice ISBN..."/>
+    <div className="pb-6 px-7">
+      <input type="text" className="outline-slate-400 py-2 px-4 text-lg border border-zinc-900 rounded-full w-full" onChange={handleChange} value={searchTerm} placeholder="Cerca per titolo, autore, codice ISBN..."/>
     </div>
   )
 }
