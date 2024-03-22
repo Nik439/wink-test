@@ -7,13 +7,13 @@ import BookItem from "../components/BookIem";
 
 export default function BookListPage () {
   const {searchTerm, isWriting} = useAppSelector(state => state.search)
-  const { data, isError, isLoading, isSuccess } = 
+  const { data, isError, isLoading, isSuccess, isFetching } = 
     useSearchBooksQuery(searchTerm, { skip: searchTerm==="" || isWriting })
 
   return (
     <div className="flex flex-col px-5 pt-14 pb-20 min-h-screen">
       <SearchBar/>      
-        { isLoading || isWriting ?
+        { isLoading || isFetching || isWriting ?
           <div className="m-auto flex">
             <img className="w-8 animate-bounce-0" src={loadingDot} />
             <img className="w-8 animate-bounce-1" src={loadingDot} />
