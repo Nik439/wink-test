@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom"
 import "./App.css"
 import BookListPage from "./pages/BookList"
 import BookDetailPage from "./pages/BookDetail"
+import { searchLoader } from "./utils/loaders"
 
 const router = createBrowserRouter([
   {
@@ -9,7 +10,8 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <BookListPage/>
+        element: <BookListPage/>,
+        loader: searchLoader
       },
       {
         path: ':bookId',

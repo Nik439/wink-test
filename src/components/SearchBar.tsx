@@ -1,23 +1,27 @@
 import { useEffect, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLoaderData, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { searchActions } from "../app/searchSlice";
 
 const writingWaitTime = 300
 
 export default function SearchBar () {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const searchLoader = useLoaderData() as string
+  const [_searchParams, setSearchParams] = useSearchParams()
   const searchTerm = useAppSelector(state => state.search.searchTerm)
   const dispatch = useAppDispatch()
   const timerRef = useRef<number|null>(null)
 
   useEffect(()=>{
-    dispatch(searchActions.changeSearch(searchParams.get('search') || ""))
-  }, [])
+    dispatch(searchActions.changeSearch(searchLoader))
+  }, [searchLoader])
 
-  // temporarly set isWriting property to true to prevent
-  // triggering too many consecutive api calls 
-  useEffect(()=>{
+  function handleChange (e: React.ChangeEvent<HTMLInputElement>) {
+    const {value} = e.target
+    dispatch(searchActions.changeSearch(value))
+
+    // temporarly set isWriting property to true to prevent
+    // triggering too many consecutive api calls 
     if (timerRef.current != null) {
       clearTimeout(timerRef.current)
     }
@@ -25,16 +29,9 @@ export default function SearchBar () {
 
     timerRef.current = setTimeout(()=>{
       dispatch(searchActions.setIsWriting(false))
+      setSearchParams(value && {search: value})
     }, writingWaitTime)
-  }, [searchTerm])
-
-  function handleChange (e: React.ChangeEvent<HTMLInputElement>) {
-    const {value} = e.target
-
-    setSearchParams(value && {search: value})
-    dispatch(searchActions.changeSearch(value))
   }
-  //TODO: redo setSearchParams accounting for back
   
   return (
     <div className="mb-16 px-0 xs:px-5 flex justify-center">
