@@ -13,7 +13,7 @@ interface Book {
 
 interface BooksApiResponse {
   kind: string
-  totalItems: 1185
+  totalItems: number
   items: Book[]
 }
 
