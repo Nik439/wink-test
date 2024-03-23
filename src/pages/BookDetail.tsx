@@ -1,11 +1,75 @@
-import { useParams } from "react-router-dom"
+import { Link, useNavigate, useParams } from "react-router-dom"
+import { useGetBookbyIdQuery } from "../app/booksApiSlice"
+import { Fragment } from "react/jsx-runtime"
+import navPrev from '../assets/navigate_prev.svg'
 
 export default function BookDetailPage () {
   const {bookId} = useParams()
+  const navigate = useNavigate()
+  const { data, isError, isLoading, isSuccess, isFetching } = 
+    useGetBookbyIdQuery(bookId || "", {skip: !bookId})    
+
+  function handleBack () {
+    navigate(-1);
+  }
 
   return (
-    <div>
-      Book Detail: {bookId}
-    </div>
+    <>
+    {isLoading || isFetching ?
+      <div>
+        Loading...
+      </div>
+    : isError ?
+      <div>
+        Error
+      </div>
+    : isSuccess &&
+      <div className="flex flex-col px-5 pt-7 pb-20 mx-auto max-w-[1000px]">
+        <button className="w-10 h-10 ml-[-10px] mb-3" onClick={handleBack}>
+          <img className="w-full" src={navPrev}/>
+        </button>
+
+        <div className="grid grid-cols-book-detail gap-x-8">
+          <div className="w-full">
+            <h1 className="text-4xl font-bold break-words">{data.volumeInfo.title}</h1>
+            <h2 className="text-2xl font-semibold text-zinc-800">{data.volumeInfo.subtitle}</h2>
+            <p className="text-zinc-600">
+              <span>Di </span>
+              {data.volumeInfo.authors.map((author:string, index:number, authors: string[]) => (
+                <Fragment key={data.id+author}>
+                  {/* if it's not the last author add a comma at the end */}
+                  <Link to={`/?search=inauthor:"${author}"`} className="text-zinc-950 hover:underline">{author}</Link>{index < authors.length-1 && ', '}
+                </Fragment>
+              ))}
+              {data.volumeInfo.publishedDate &&
+                <>
+                  <span> · </span>
+                  <span>{new Date(data.volumeInfo.publishedDate).getFullYear()}</span>
+                </>
+              }
+            </p>
+            <p className="text-zinc-600">
+              {data.volumeInfo.publisher}
+            </p>
+          </div>
+          <div className="min-w-32">
+            <img className="w-full shadow-lg rounded-md" src={data.volumeInfo.imageLinks?.thumbnail}/>
+          </div>   
+        </div>
+
+        <span className="w-full h-px bg-zinc-400 my-5"></span>
+        
+        <div className="grid grid-cols-book-detail gap-x-8">
+          <div dangerouslySetInnerHTML={{__html: data.volumeInfo.description}}></div>
+          <div className="flex justify-center items-start">
+            <a href={data.volumeInfo.infoLink} className="px-5 py-3 bg-orange-400 font-semibold rounded-lg">Compra</a>
+          </div>
+        </div>
+        
+      </div>
+
+    }
+    </>
+    
   )
 }

@@ -8,7 +8,7 @@ export interface Book {
   volumeInfo: any
   saleInfo: any
   accessInfo: any
-  searchInfo: any
+  searchInfo?: any
 }
 
 interface BooksApiResponse {
@@ -31,10 +31,13 @@ const booksApiSlice = createApi({
   endpoints: (builder) => ({
     searchBooks: builder.query<BooksApiResponse, BooksApiArgs>({
       query: ({searchTerm, startIndex, maxResults}) => `?q=${searchTerm}&startIndex=${startIndex}&maxResults=${maxResults}`,
+    }),
+    getBookbyId: builder.query<Book, string>({
+      query: (bookId) => `/${bookId}`
     })
   }),
 })
 
-export const {useSearchBooksQuery} = booksApiSlice
+export const {useSearchBooksQuery, useGetBookbyIdQuery} = booksApiSlice
 
 export default booksApiSlice

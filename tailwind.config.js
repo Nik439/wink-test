@@ -15,6 +15,9 @@ export default {
       screens: {
         'xs': '480px'
       },
+      gridTemplateColumns: {
+        'book-detail': '1fr 8rem'
+      },
       animation: {
         'bounce-0': 'big-bounce .5s infinite ',
         'bounce-1': 'big-bounce .5s infinite 125ms',
