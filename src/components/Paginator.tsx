@@ -65,23 +65,28 @@ export default function Paginator ({totalItems}: PaginatorProps) {
 
   return (
     <div className="flex justify-center">
-      <button className="w-7 h-7 m-1"  onClick={handlePrevPage}>
-        <img className="w-7" src={navPrev}/>
-      </button>
+      {currentPage > 0 &&
+        <button className="w-7 h-7 m-1"  onClick={handlePrevPage}>
+          <img className="w-7" src={navPrev}/>
+        </button>
+      }
       {pages.map(page=>(
         <button
           key={`page-button-${page.value}`}
           onClick={()=>handlePageChange(page.value)}
-          className={`${page.current ? 'bg-amber-700' : 'bg-zinc-900'} text-amber-50 w-7 h-7 m-1 rounded-full flex justify-center select-none cursor-pointer`}
+          className={`${page.current ? 'bg-amber-700' : 'bg-zinc-900 hidden xs:flex'} text-amber-50 w-7 h-7 m-1 rounded-full flex justify-center select-none cursor-pointer`}
         >
-          <span className="flex items-center">
+          <span>
             {page.value}
           </span>
         </button>
       ))}
-      <button className="w-7 h-7 m-1" onClick={handleNextPage}>
-        <img className="w-7" src={navNext}/>
-      </button>
+      {currentPage+1 < totalPages &&
+        <button className="w-7 h-7 m-1" onClick={handleNextPage}>
+          <img className="w-7" src={navNext}/>
+        </button>
+      }
+      
     </div>
   )
 }
