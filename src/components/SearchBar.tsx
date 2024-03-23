@@ -2,22 +2,25 @@ import { useEffect, useRef } from "react";
 import { useLoaderData, useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { searchActions } from "../app/searchSlice";
+import { SearchLoaderResponse } from "../utils/loaders";
+import { paginationActions } from "../app/paginationSlice";
 
 const writingWaitTime = 300
 
 export default function SearchBar () {
-  const searchLoader = useLoaderData() as string
+  const {searchQuery} = useLoaderData() as SearchLoaderResponse
   const [_searchParams, setSearchParams] = useSearchParams()
   const searchTerm = useAppSelector(state => state.search.searchTerm)
   const dispatch = useAppDispatch()
   const timerRef = useRef<number|null>(null)
 
   useEffect(()=>{
-    dispatch(searchActions.changeSearch(searchLoader))
-  }, [searchLoader])
+    dispatch(searchActions.changeSearch(searchQuery))
+  }, [searchQuery])
 
   function handleChange (e: React.ChangeEvent<HTMLInputElement>) {
     const {value} = e.target
+    dispatch(paginationActions.setPage(0))
     dispatch(searchActions.changeSearch(value))
 
     // temporarly set isWriting property to true to prevent
