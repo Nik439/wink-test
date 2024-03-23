@@ -4,6 +4,7 @@ import { useAppSelector } from "../app/hooks";
 import logo from '../assets/logo.svg'
 import loadingDot from '../assets/loading-dot.svg'
 import BookItem from "../components/BookIem";
+import Paginator from "../components/Paginator";
 
 export default function BookListPage () {
   const {searchTerm, isWriting} = useAppSelector(state => state.search)
@@ -24,12 +25,16 @@ export default function BookListPage () {
           <div className="flex flex-col m-auto">
             <p className="text-2xl text-center text-red-900 font-semibold">C'è stato un errore, riprova più tardi</p>
           </div>
-        : isSuccess && data.totalItems > 0 ? 
-          <ul>
-            {data.items.map((book: Book)=>(
-              <BookItem bookData={book} key={book.id}/>
-            ))}
-          </ul>
+        : isSuccess && data.totalItems > 0 ?
+          <>
+            <Paginator/>
+            <ul>
+              {data.items.map((book: Book)=>(
+                <BookItem bookData={book} key={book.id}/>
+              ))}
+            </ul>
+            <Paginator/>
+          </>
         : isSuccess && data.totalItems === 0 ? 
           <div className="text-xl text-center max-w-150 w-full flex flex-col m-auto break-words">
             <p className="mb-3">Non abbiamo trovato risultati per:</p>
