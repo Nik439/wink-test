@@ -64,7 +64,7 @@ export default function Paginator ({totalItems}: PaginatorProps) {
   }
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center mt-6">
       {currentPage > 0 &&
         <button className="w-7 h-7 m-1"  onClick={handlePrevPage}>
           <img className="w-7" src={navPrev}/>
