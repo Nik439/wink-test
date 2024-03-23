@@ -7,9 +7,10 @@ import BookItem from "../components/BookIem";
 import Paginator from "../components/Paginator";
 
 export default function BookListPage () {
+  const {maxResults, currentPage} = useAppSelector(state => state.pagination)
   const {searchTerm, isWriting} = useAppSelector(state => state.search)
   const { data, isError, isLoading, isSuccess, isFetching } = 
-    useSearchBooksQuery(searchTerm, { skip: searchTerm==="" || isWriting })
+    useSearchBooksQuery({searchTerm, startIndex: maxResults*currentPage, maxResults}, { skip: searchTerm==="" || isWriting })
 
   return (
     <div className="flex flex-col px-5 pt-14 pb-20 min-h-screen mx-auto max-w-[1200px]">
@@ -25,21 +26,22 @@ export default function BookListPage () {
           <div className="flex flex-col m-auto">
             <p className="text-2xl text-center text-red-900 font-semibold">C'è stato un errore, riprova più tardi</p>
           </div>
-        : isSuccess && data.totalItems > 0 ?
+        : isSuccess ?
           <>
-            <Paginator/>
-            <ul>
-              {data.items.map((book: Book)=>(
-                <BookItem bookData={book} key={book.id}/>
-              ))}
-            </ul>
-            <Paginator/>
+            {data.items && data.totalItems > 0 ?
+              <ul>
+                {data.items.map((book: Book)=>(
+                  <BookItem bookData={book} key={book.id}/>
+                ))}
+              </ul>
+            :
+              <div className="text-xl text-center max-w-150 w-full flex flex-col m-auto break-words">
+                <p className="mb-3">Non abbiamo trovato risultati per:</p>
+                <p className="font-semibold">{searchTerm}</p>
+              </div>
+            }
+            <Paginator totalItems={data.totalItems} />
           </>
-        : isSuccess && data.totalItems === 0 ? 
-          <div className="text-xl text-center max-w-150 w-full flex flex-col m-auto break-words">
-            <p className="mb-3">Non abbiamo trovato risultati per:</p>
-            <p className="font-semibold">{searchTerm}</p>
-          </div>
         : 
           <div className="m-auto pb-40 flex flex-col items-center">
             <img className="w-40 opacity-90 pb-3" src={logo} />
