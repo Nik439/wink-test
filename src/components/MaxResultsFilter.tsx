@@ -33,12 +33,18 @@ export default function MaxResultsFilter () {
 
   return (
     <div className="flex justify-end mb-10 mx-auto max-w-200 w-full xs:px-5">
-      <select defaultValue={maxResults} onChange={handleChange}>
-        <option value={5}>5</option>
-        <option value={10}>10</option>
-        <option value={15}>15</option>
-        <option value={20}>20</option>
-      </select>
+      <div className=" text-zinc-500 hover:text-zinc-950">
+        <label htmlFor="max-select" className="mr-1 select-none">
+          Numero risultati:
+        </label>
+        <select ref={selectRef} value={maxResults} className="bg-transparent cursor-pointer" name="max-select" id="max-select" onChange={handleChange}>
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+          <option value={15}>15</option>
+          <option value={20}>20</option>
+        </select>  
+      </div>
+      
     </div>
   )
 }
