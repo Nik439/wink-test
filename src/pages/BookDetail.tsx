@@ -65,7 +65,7 @@ export default function BookDetailPage () {
 
           <span className="w-full h-px bg-zinc-400 my-5"></span>
           
-          <div className="max-w-[800px]">
+          <div className="max-w-200">
             <div dangerouslySetInnerHTML={{__html: data.volumeInfo.description}}></div>
             
           </div>
