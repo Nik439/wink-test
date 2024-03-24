@@ -32,10 +32,10 @@ export default function BookDetailPage () {
         </div>
       : isSuccess &&
         <>
-          <div className="grid grid-cols-book-detail gap-x-8">
+          <div className="flex flex-col-reverse xs:grid grid-cols-book-detail gap-y-5 xs:gap-x-8">
             <div className="w-full">
-              <h1 className="text-4xl font-bold break-words">{data.volumeInfo.title}</h1>
-              <h2 className="text-2xl font-semibold text-zinc-800">{data.volumeInfo.subtitle}</h2>
+              <h1 className="text-2xl md:text-4xl font-bold break-words">{data.volumeInfo.title}</h1>
+              <h2 className="text-lg md:text-2xl font-semibold text-zinc-800">{data.volumeInfo.subtitle}</h2>
               <p className="text-zinc-600">
                 <span>Di </span>
                 {data.volumeInfo.authors.map((author:string, index:number, authors: string[]) => (
@@ -54,19 +54,20 @@ export default function BookDetailPage () {
               <p className="text-zinc-600">
                 {data.volumeInfo.publisher}
               </p>
+              <div className="flex justify-start mt-4">
+                <a href={data.volumeInfo.infoLink} className="w-full xs:w-auto text-center px-5 py-3 bg-orange-400 hover:bg-orange-500 font-semibold rounded-lg">Compra</a>
+              </div>
             </div>
-            <div className="min-w-32">
+            <div className="w-32 min-w-32 m-auto">
               <img className="w-full shadow-lg rounded-md" src={data.volumeInfo.imageLinks?.thumbnail}/>
-            </div>   
+            </div>
           </div>
 
           <span className="w-full h-px bg-zinc-400 my-5"></span>
           
-          <div className="grid grid-cols-book-detail gap-x-8">
+          <div className="max-w-[800px]">
             <div dangerouslySetInnerHTML={{__html: data.volumeInfo.description}}></div>
-            <div className="flex justify-center items-start">
-              <a href={data.volumeInfo.infoLink} className="px-5 py-3 bg-orange-400 hover:bg-orange-500 font-semibold rounded-lg">Compra</a>
-            </div>
+            
           </div>
         </>
       }
