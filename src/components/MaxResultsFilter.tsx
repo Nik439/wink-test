@@ -37,7 +37,7 @@ export default function MaxResultsFilter () {
         <label htmlFor="max-select" className="mr-1 select-none">
           Numero risultati:
         </label>
-        <select ref={selectRef} value={maxResults} className="bg-transparent cursor-pointer" name="max-select" id="max-select" onChange={handleChange}>
+        <select value={maxResults} className="bg-transparent cursor-pointer" name="max-select" id="max-select" onChange={handleChange}>
           <option value={5}>5</option>
           <option value={10}>10</option>
           <option value={15}>15</option>
