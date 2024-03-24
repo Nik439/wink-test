@@ -5,6 +5,7 @@ import logo from '../assets/logo.svg'
 import loadingDot from '../assets/loading-dot.svg'
 import BookItem from "../components/BookIem";
 import Paginator from "../components/Paginator";
+import MaxResultsFilter from "../components/MaxResultsFilter";
 
 export default function BookListPage () {
   const {maxResults, currentPage} = useAppSelector(state => state.pagination)
@@ -14,7 +15,8 @@ export default function BookListPage () {
 
   return (
     <div className="flex flex-col px-5 pt-14 pb-20 min-h-screen mx-auto max-w-[1200px]">
-      <SearchBar/>      
+      <SearchBar/>
+      <MaxResultsFilter/>
         { isLoading || isFetching || isWriting ?
           <div className="m-auto flex">
             <img className="w-8 animate-bounce-0" src={loadingDot} />

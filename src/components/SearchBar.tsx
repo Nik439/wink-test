@@ -8,6 +8,7 @@ import { paginationActions } from "../app/paginationSlice";
 const writingWaitTime = 300
 
 export default function SearchBar () {
+  const maxResults = useAppSelector(state => state.pagination.maxResults)
   const {searchQuery} = useLoaderData() as SearchLoaderResponse
   const [_searchParams, setSearchParams] = useSearchParams()
   const searchTerm = useAppSelector(state => state.search.searchTerm)
@@ -32,12 +33,15 @@ export default function SearchBar () {
 
     timerRef.current = setTimeout(()=>{
       dispatch(searchActions.setIsWriting(false))
-      setSearchParams(value && {search: value})
+
+      let searchObj = value && {search: value}
+      let maxObj = maxResults!=10 && {max: maxResults.toString()}
+      setSearchParams({...searchObj, ...maxObj})
     }, writingWaitTime)
   }
   
   return (
-    <div className="mb-16 px-0 xs:px-5 flex justify-center">
+    <div className="mb-6 px-0 xs:px-5 flex justify-center">
       <input
         type="text"
         className="outline-slate-400 py-2 px-4 max-w-200 text-lg border border-zinc-900 rounded-full w-full"

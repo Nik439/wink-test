@@ -50,7 +50,7 @@ export default function Paginator ({totalItems}: PaginatorProps) {
   function handlePageChange (newPage: number) {
     console.log(newPage);
     
-    setSearchParams({search: searchQuery, p: newPage.toString()})
+    setSearchParams({search: searchQuery, max: maxResults.toString(), p: newPage.toString()})
   }
 
   function handlePrevPage () {
